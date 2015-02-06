@@ -1,0 +1,23 @@
+{
+    "name": "activewebsite/enterprise-core",
+    "description": "Core Enterprise Package",
+    "authors": [
+        {
+            "name": "Activewebsite",
+            "email": "james@booj.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": ">=5.0.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/commands"
+        ],
+        "psr-0": {
+            "Activewebsite\\EnterpriseCore\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
