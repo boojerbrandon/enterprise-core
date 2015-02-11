@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Activewebsite\EnterpriseCore\Commands;
 
 class EnterpriseCoreServiceProvider extends ServiceProvider {
 	
@@ -28,7 +29,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	{
 	
 		// load our routes
-		include __DIR__.'/../../routes.php';
+		include __DIR__.'/routes.php';
 
 		// register view composers
 		$this->registerViewComposers();

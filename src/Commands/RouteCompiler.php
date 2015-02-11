@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore;
+<?php namespace Activewebsite\EnterpriseCore\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
