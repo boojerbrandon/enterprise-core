@@ -15,7 +15,7 @@
         "classmap": [
             "src/commands"
         ],
-        "psr-0": {
+        "psr-4": {
             "Activewebsite\\EnterpriseCore\\": "src/"
         }
     },
