@@ -60,7 +60,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	{
 		$this->app['compileCoreRoutes'] = $this->app->share(function($app)
         {
-            return new \Activewebsite\EnterpriseCore\CommandsRouteCompiler;
+            return new \Activewebsite\EnterpriseCore\Commands\RouteCompiler;
         });
 	}
 }
