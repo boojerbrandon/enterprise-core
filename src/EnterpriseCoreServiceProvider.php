@@ -2,7 +2,6 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use Activewebsite\EnterpriseCore\Commands;
 
 class EnterpriseCoreServiceProvider extends ServiceProvider {
 	
@@ -61,7 +60,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	{
 		$this->app['compileCoreRoutes'] = $this->app->share(function($app)
         {
-            return new RouteCompiler;
+            return new \Activewebsite\EnterpriseCore\CommandsRouteCompiler;
         });
 	}
 }
