@@ -1,4 +1,4 @@
-@extends('enteerprise::core')
+@extends('enterprisecore::admin.layout')
 
 @section('body')
 
