@@ -26,7 +26,11 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-	
+		$this->loadViewsFrom(__DIR__.'/resources/views', 'enterprisecore');
+			
+		// include filters
+		include __DIR__.'/filters.php';
+
 		// load our routes
 		include __DIR__.'/routes.php';
 
