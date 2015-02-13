@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
-use Illuminate\Support\Facades\Redirect;
 
 class UsersController extends AuthorizedController {
 

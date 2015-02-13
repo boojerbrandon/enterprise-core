@@ -1,4 +1,4 @@
-@extends('enterprisecore::admin')
+@extends('enterprisecore::admin.layout')
 
 @section('title')
 Enter SMS Code

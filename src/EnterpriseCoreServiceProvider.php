@@ -17,6 +17,9 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		
 		// add command to artisan
 		$this->commands('compileCoreRoutes');
+
+		// merge configs so app inherits package
+		$this->mergeConfigFrom(__DIR__.'/config/enterprise-core.php', 'enterprisecore');
 	}	
 
 	/**
@@ -26,12 +29,16 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		// tell app where views are held
 		$this->loadViewsFrom(__DIR__.'/resources/views', 'enterprisecore');
+
+		// tell app where translations are held
+		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'enterprisecore');
 			
 		// include filters
 		include __DIR__.'/filters.php';
 
-		// load our routes
+		// include routes
 		include __DIR__.'/routes.php';
 
 		// register view composers
@@ -62,8 +69,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	 */
 	public function registerPackageCommands()
 	{
-		$this->app['compileCoreRoutes'] = $this->app->share(function($app)
-        {
+		$this->app['compileCoreRoutes'] = $this->app->share(function($app) {
             return new \Activewebsite\EnterpriseCore\Commands\RouteCompiler;
         });
 	}

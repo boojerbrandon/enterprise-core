@@ -1,13 +1,13 @@
 <?php namespace Activewebsite\EnterpriseCore\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
-use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\Redirect;
+use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class AuthController extends BaseController {
 
@@ -53,11 +53,11 @@ class AuthController extends BaseController {
 				return Redirect::intended('account');
 			}
 
-			$errors = 'Invalid login or password.';
+			$errors = trans('enterprisecore::sentinel.invalid_credentials_error_message');
 		}
 		catch (NotActivatedException $e)
 		{
-			$errors = 'Account is not activated!';
+			$errors = trans('enterprisecore::sentinel.account_not_activated_message');
 
 			return Redirect::to('reactivate')->with('user', $e->getUser());
 		}
@@ -65,7 +65,7 @@ class AuthController extends BaseController {
 		{
 			$delay = $e->getDelay();
 
-			$errors = "Your account is blocked for {$delay} second(s).";
+			$errors = trans('enterprisecore::sentinel.account_blocked_message') . " {$delay} second(s).";
 		}
 
 		return Redirect::back()
@@ -115,23 +115,23 @@ class AuthController extends BaseController {
 
 			$sent = Mail::send('enterprisecore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user)
 			{
-				$m->to($user->email)->subject('Activate Your Account');
+				$m->to($user->email)->subject(trans('enterprisecore::sentinel.activation_subject'));
 			});
 
 			if ($sent === 0)
 			{
 				return Redirect::to('register')
-					->withErrors('Failed to send activation email.');
+					->withErrors(trans('enterprisecore::sentinel.activation_email_error_message'));
 			}
 
 			return Redirect::to('login')
-				->withSuccess('Your accout was successfully created. You might login now.')
+				->withSuccess(trans('enterprisecore::sentinel.account_create_success_message'))
 				->with('userId', $user->getUserId());
 		}
 
 		return Redirect::to('register')
 			->withInput()
-			->withErrors('Failed to register.');
+			->withErrors(trans('enterprisecore::sentinel.account_register_error_message'));
 	}
 
 }
