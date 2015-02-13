@@ -13,17 +13,17 @@
 
 Route::filter('auth', function()
 {
-	// if (Auth::guest())
-	// {
-	// 	if (Request::ajax())
-	// 	{
-	// 		return Response::make('Unauthorized', 401);
-	// 	}
-	// 	else
-	// 	{
-	// 		return Redirect::guest('login');
-	// 	}
-	// }
+	if (! Sentinel::check())
+	{
+		if (Request::ajax())
+		{
+			return Response::make('Unauthorized', 401);
+		}
+		else
+		{
+			return Redirect::guest('login');
+		}
+	}
 });
 
 Route::filter('auth.admin', function()
@@ -52,5 +52,5 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (!Sentinel::check()) return Redirect::to('/');
 });
