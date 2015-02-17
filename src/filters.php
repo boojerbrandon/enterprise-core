@@ -21,7 +21,7 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::guest(route('admin_login'));
 		}
 	}
 });
@@ -30,7 +30,7 @@ Route::filter('auth.admin', function()
 {
 	if (Sentinel::check() && ! Sentinel::hasAccess('admin'))
 	{
-		return Redirect::to('account')->withErrors(['Only admins can access this page.']);
+		return Redirect::route('admin_account')->withErrors(['Only admins can access this page.']);
 	}
 });
 

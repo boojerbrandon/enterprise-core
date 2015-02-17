@@ -18,22 +18,22 @@ My Account
 			</h3>
 
 			<div class="list-group">
-				<a href="{{ URL::to('account/kill') }}" class="list-group-item">Kill all <small>(including my session)</small></a>
-				<a href="{{ URL::to('account/kill-all') }}" class="list-group-item">Kill all <small>(excluding my session)</small></a>
+				<a href="{{ URL::route('admin_kill') }}" class="list-group-item">Kill all <small>(including my session)</small></a>
+				<a href="{{ URL::route('admin_kill_all') }}" class="list-group-item">Kill all <small>(excluding my session)</small></a>
 			</div>
 
 			<div class="list-group">
 
 				@foreach ($user->persistences as $index => $p)
 					@if ($p->code === $persistence->check())
-						<a href="{{ URL::to("account/kill/{$p->code}") }}" class="list-group-item active">
+						<a href="{{ URL::route('admin_kill_session_key', $p->code) }}" class="list-group-item active">
 							{{ $p->created_at->format('F d, Y - h:ia') }}
 							<span class="label label-info">{{ $p->browser }}</span>
 							<span class="badge">{{ $p->last_used }}</span>
 							<span class="badge">You</span>
 						</a>
 					@else
-						<a href="{{ URL::to("account/kill/{$p->code}") }}" class="list-group-item">
+						<a href="{{ URL::route('admin_kill_session_key', $p->code) }}" class="list-group-item">
 							{{ $p->created_at->format('F d, Y - h:ia') }}
 							<span class="label label-info">{{ $p->browser }}</span>
 							<span class="badge">{{ $p->last_used }}</span>
@@ -49,11 +49,11 @@ My Account
 
 			@if (Activation::completed($user))
 
-				<a class="btn btn-danger" href="{{ URL::to('deactivate') }}">Deactivate</a>
+				<a class="btn btn-danger" href="{{ URL::route('admin_deactivate') }}">Deactivate</a>
 
 			@else
 
-				<a class="btn btn-default" href="{{ URL::to('reactivate') }}">Activate</a>
+				<a class="btn btn-default" href="{{ URL::route('admin_reactivate') }}">Activate</a>
 
 			@endif
 		</div>

@@ -30,14 +30,14 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (! Sentinel::check())
-						<li><a href="{{ URL::to('login') }}">Login</a></li>
-						<li><a href="{{ URL::to('register') }}">Register</a></li>
+						<li><a href="{{ URL::route('admin_login') }}">Login</a></li>
+						<li><a href="{{ URL::route('admin_register') }}">Register</a></li>
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ URL::to('account') }}">Account</a></li>
-								<li><a href="{{ URL::to('logout') }}">Logout</a></li>
+								<li><a href="{{ URL::route('admin_account') }}">Account</a></li>
+								<li><a href="{{ URL::route('admin_logout') }}">Logout</a></li>
 							</ul>
 						</li>
 					@endif
@@ -48,7 +48,8 @@
 
 	<div class="container">
 		<div class="col-sm-3">
-			@include('components.quick-search', ['title' => 'passed in data'])
+			{{ RenderComponent::render('QuickSearchComponent', ['title' => 'foo title']) }}
+			
 		</div>
 		<div class="col-sm-9">
 			@yield('content')

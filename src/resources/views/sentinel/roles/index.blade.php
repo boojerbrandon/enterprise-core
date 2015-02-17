@@ -4,7 +4,7 @@
 @section('body')
 
 <div class="page-header">
-	<h1>Roles <span class="pull-right"><a href="{{ URL::to('roles/create') }}" class="btn btn-warning">Create</a></span></h1>
+	<h1>Roles <span class="pull-right"><a href="{{ URL::route('admin_create_roles') }}" class="btn btn-warning">Create</a></span></h1>
 </div>
 
 @if ($roles->count())
@@ -28,8 +28,8 @@ Page {{ $roles->currentPage() }} of {{ $roles->lastPage() }}
 			<td>{{ $role->name }}</td>
 			<td>{{ $role->slug }}</td>
 			<td>
-				<a class="btn btn-warning" href="{{ URL::to("roles/{$role->id}") }}">Edit</a>
-				<a class="btn btn-danger" href="{{ URL::to("roles/{$role->id}/delete") }}">Delete</a>
+				<a class="btn btn-warning" href="{{ URL::route('admin_edit_roles', $role->id) }}">Edit</a>
+				<a class="btn btn-danger" href="{{ URL::route('admin_delete_roles', $role->id) }}">Delete</a>
 			</td>
 		</tr>
 		@endforeach

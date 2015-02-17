@@ -95,10 +95,10 @@ class RolesController extends AuthorizedController {
 		{
 			$role->delete();
 
-			return Redirect::to('roles');
+			return Redirect::route('admin_roles');
 		}
 
-		return Redirect::to('roles');
+		return Redirect::route('admin_roles');
 	}
 
 	/**
@@ -114,7 +114,7 @@ class RolesController extends AuthorizedController {
 		{
 			if ( ! $role = $this->roles->find($id))
 			{
-				return Redirect::to('roles');
+				return Redirect::route('admin_roles');
 			}
 		}
 		else
@@ -168,7 +168,7 @@ class RolesController extends AuthorizedController {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to('roles');
+			return Redirect::route('admin_roles');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

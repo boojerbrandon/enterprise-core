@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
 
 class AuthController extends BaseController {
 
@@ -50,7 +52,7 @@ class AuthController extends BaseController {
 
 			if (Sentinel::authenticate(Input::all(), $remember))
 			{
-				return Redirect::intended('account');
+				return Redirect::intended(route('admin_account'));
 			}
 
 			$errors = trans('enterprisecore::sentinel.invalid_credentials_error_message');
@@ -59,7 +61,7 @@ class AuthController extends BaseController {
 		{
 			$errors = trans('enterprisecore::sentinel.account_not_activated_message');
 
-			return Redirect::to('reactivate')->with('user', $e->getUser());
+			return Redirect::route('admin_reactivate')->with('user', $e->getUser());
 		}
 		catch (ThrottlingException $e)
 		{
@@ -120,16 +122,16 @@ class AuthController extends BaseController {
 
 			if ($sent === 0)
 			{
-				return Redirect::to('register')
+				return Redirect::route('admin_register')
 					->withErrors(trans('enterprisecore::sentinel.activation_email_error_message'));
 			}
 
-			return Redirect::to('login')
+			return Redirect::route('admin_login')
 				->withSuccess(trans('enterprisecore::sentinel.account_create_success_message'))
 				->with('userId', $user->getUserId());
 		}
 
-		return Redirect::to('register')
+		return Redirect::route('admin_register')
 			->withInput()
 			->withErrors(trans('enterprisecore::sentinel.account_register_error_message'));
 	}

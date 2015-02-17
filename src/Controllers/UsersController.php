@@ -47,7 +47,10 @@ class UsersController extends AuthorizedController {
 	 */
 	public function create()
 	{
-		return $this->showForm('create');
+		$user = $this->users->createModel();
+		
+
+		return View::make('enterprisecore::sentinel.users.form', compact('user'));
 	}
 
 	/**
@@ -68,7 +71,13 @@ class UsersController extends AuthorizedController {
 	 */
 	public function edit($id)
 	{
-		return $this->showForm('update', $id);
+		if ( ! $user = $this->users->createModel()->find($id)) {
+			return Redirect::route('admin_users');
+		}
+
+		$all_roles = Sentinel::getRoleRepository()->createModel()->get();
+
+		return View::make('enterprisecore::sentinel.users.edit_form', compact('user', 'all_roles'));
 	}
 
 	/**
@@ -94,34 +103,10 @@ class UsersController extends AuthorizedController {
 		{
 			$user->delete();
 
-			return Redirect::to('users');
+			return Redirect::route('admin_users');
 		}
 
-		return Redirect::to('users');
-	}
-
-	/**
-	 * Shows the form.
-	 *
-	 * @param  string  $mode
-	 * @param  int     $id
-	 * @return mixed
-	 */
-	protected function showForm($mode, $id = null)
-	{
-		if ($id)
-		{
-			if ( ! $user = $this->users->createModel()->find($id))
-			{
-				return Redirect::to('users');
-			}
-		}
-		else
-		{
-			$user = $this->users->createModel();
-		}
-
-		return View::make('enterprisecore::sentinel.users.form', compact('mode', 'user'));
+		return Redirect::route('admin_users');
 	}
 
 	/**
@@ -151,6 +136,22 @@ class UsersController extends AuthorizedController {
 
 			if ($messages->isEmpty())
 			{
+				// get all roles
+				$all_roles = Sentinel::getRoleRepository()->createModel()->get();
+				
+				// iterate over roles and attach/detach them
+				foreach ($all_roles as $role) {
+					$inst = Sentinel::findRoleById($role->id);
+					
+					if (in_array($role->id, $input['roles'])) {
+						if (!$user->inRole($role->id)) {
+							$inst->users()->attach($user);
+						}
+					} else {
+						$inst->users()->detach($user);
+					}
+				}
+
 				$this->users->update($user, $input);
 			}
 		}
@@ -170,7 +171,7 @@ class UsersController extends AuthorizedController {
 
 		if ($messages->isEmpty())
 		{
-			return Redirect::to('users');
+			return Redirect::route('admin_users');
 		}
 
 		return Redirect::back()->withInput()->withErrors($messages);

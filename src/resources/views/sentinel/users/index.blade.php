@@ -4,7 +4,7 @@
 @section('body')
 
 <div class="page-header">
-	<h1>Users <span class="pull-right"><a href="{{ URL::to('users/create') }}" class="btn btn-warning">Create</a></span></h1>
+	<h1>Users <span class="pull-right"><a href="{{ URL::route('admin_create_users') }}" class="btn btn-warning">Create</a></span></h1>
 </div>
 
 @if ($users->count())
@@ -28,8 +28,8 @@ Page {{ $users->currentPage() }} of {{ $users->lastPage() }}
 			<td>{{ $user->first_name }} {{ $user->last_name }}</td>
 			<td>{{ $user->email }}</td>
 			<td>
-				<a class="btn btn-warning" href="{{ URL::to("users/{$user->id}") }}">Edit</a>
-				<a class="btn btn-danger" href="{{ URL::to("users/{$user->id}/delete") }}">Delete</a>
+				<a class="btn btn-warning" href="{{ URL::route('admin_edit_users', $user->id) }}">Edit</a>
+				<a class="btn btn-danger" href="{{ URL::route('admin_delete_users', $user->id) }}">Delete</a>
 			</td>
 		</tr>
 		@endforeach

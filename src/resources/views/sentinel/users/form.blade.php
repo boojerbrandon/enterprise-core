@@ -4,7 +4,7 @@
 @section('body')
 
 <div class="page-header">
-	<h1>{{ $mode == 'create' ? 'Create User' : 'Update User' }} <small>{{ $mode === 'update' ? $user->name : null }}</small></h1>
+	<h1>Create User</h1>
 </div>
 
 <form method="post" action="" autocomplete="off">
