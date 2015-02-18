@@ -37,7 +37,7 @@ class UsersController extends AuthorizedController {
 	public function index()
 	{
 		$users = $this->users->createModel()->paginate();
-		return View::make('enterprisecore::sentinel.users.index', compact('users'));
+		return View::make('enterpriseCore::sentinel.users.index', compact('users'));
 	}
 
 	/**
@@ -50,7 +50,7 @@ class UsersController extends AuthorizedController {
 		$user = $this->users->createModel();
 		
 
-		return View::make('enterprisecore::sentinel.users.form', compact('user'));
+		return View::make('enterpriseCore::sentinel.users.form', compact('user'));
 	}
 
 	/**
@@ -77,7 +77,7 @@ class UsersController extends AuthorizedController {
 
 		$all_roles = Sentinel::getRoleRepository()->createModel()->get();
 
-		return View::make('enterprisecore::sentinel.users.edit_form', compact('user', 'all_roles'));
+		return View::make('enterpriseCore::sentinel.users.edit_form', compact('user', 'all_roles'));
 	}
 
 	/**

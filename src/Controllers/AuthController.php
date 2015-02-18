@@ -20,7 +20,7 @@ class AuthController extends BaseController {
 	 */
 	public function login()
 	{
-		return View::make('enterprisecore::sentinel.login');
+		return View::make('enterpriseCore::sentinel.login');
 	}
 
 	/**
@@ -55,11 +55,11 @@ class AuthController extends BaseController {
 				return Redirect::intended(route('admin_account'));
 			}
 
-			$errors = trans('enterprisecore::sentinel.invalid_credentials_error_message');
+			$errors = trans('enterpriseCore::sentinel.invalid_credentials_error_message');
 		}
 		catch (NotActivatedException $e)
 		{
-			$errors = trans('enterprisecore::sentinel.account_not_activated_message');
+			$errors = trans('enterpriseCore::sentinel.account_not_activated_message');
 
 			return Redirect::route('admin_reactivate')->with('user', $e->getUser());
 		}
@@ -67,7 +67,7 @@ class AuthController extends BaseController {
 		{
 			$delay = $e->getDelay();
 
-			$errors = trans('enterprisecore::sentinel.account_blocked_message') . " {$delay} second(s).";
+			$errors = trans('enterpriseCore::sentinel.account_blocked_message') . " {$delay} second(s).";
 		}
 
 		return Redirect::back()
@@ -82,7 +82,7 @@ class AuthController extends BaseController {
 	 */
 	public function register()
 	{
-		return View::make('enterprisecore::sentinel.register');
+		return View::make('enterpriseCore::sentinel.register');
 	}
 
 	/**
@@ -115,25 +115,25 @@ class AuthController extends BaseController {
 
 			$code = $activation->code;
 
-			$sent = Mail::send('enterprisecore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user)
+			$sent = Mail::send('enterpriseCore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user)
 			{
-				$m->to($user->email)->subject(trans('enterprisecore::sentinel.activation_subject'));
+				$m->to($user->email)->subject(trans('enterpriseCore::sentinel.activation_subject'));
 			});
 
 			if ($sent === 0)
 			{
 				return Redirect::route('admin_register')
-					->withErrors(trans('enterprisecore::sentinel.activation_email_error_message'));
+					->withErrors(trans('enterpriseCore::sentinel.activation_email_error_message'));
 			}
 
 			return Redirect::route('admin_login')
-				->withSuccess(trans('enterprisecore::sentinel.account_create_success_message'))
+				->withSuccess(trans('enterpriseCore::sentinel.account_create_success_message'))
 				->with('userId', $user->getUserId());
 		}
 
 		return Redirect::route('admin_register')
 			->withInput()
-			->withErrors(trans('enterprisecore::sentinel.account_register_error_message'));
+			->withErrors(trans('enterpriseCore::sentinel.account_register_error_message'));
 	}
 
 }

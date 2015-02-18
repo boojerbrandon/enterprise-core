@@ -1,7 +1,7 @@
-@extends('enterprisecore::admin.layout')
+@extends('enterpriseCore::admin.layout')
 
 {{-- Page content --}}
-@section('body')
+@section('content')
 
 <div class="page-header">
 	<h1>{{ $mode == 'create' ? 'Create Role' : 'Update Role' }} <small>{{ $mode === 'update' ? $role->name : null }}</small></h1>

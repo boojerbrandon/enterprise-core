@@ -1,10 +1,10 @@
-@extends('enterprisecore::admin.layout')
+@extends('enterpriseCore::admin.layout')
 
 @section('title')
 My Account
 @stop
 
-@section('body')
+@section('content')
 
 	<div class="page-header">
 		<h1>My Account</h1>

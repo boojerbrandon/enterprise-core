@@ -1,10 +1,10 @@
-@extends('enterprisecore::admin.layout')
+@extends('enterpriseCore::admin.layout')
 
 @section('title')
 Register for SMS
 @stop
 
-@section('body')
+@section('content')
 
 <div class="container">
 

@@ -1,7 +1,7 @@
-@extends('enterprisecore::admin.layout')
+@extends('enterpriseCore::admin.layout')
 
 {{-- Page content --}}
-@section('body')
+@section('content')
 
 <div class="page-header">
 	<h1>Users <span class="pull-right"><a href="{{ URL::route('admin_create_users') }}" class="btn btn-warning">Create</a></span></h1>

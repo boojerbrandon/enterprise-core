@@ -38,7 +38,7 @@ class RolesController extends AuthorizedController {
 	{
 		$roles = $this->roles->paginate();
 
-		return View::make('enterprisecore::sentinel.roles.index', compact('roles'));
+		return View::make('enterpriseCore::sentinel.roles.index', compact('roles'));
 	}
 
 	/**
@@ -122,7 +122,7 @@ class RolesController extends AuthorizedController {
 			$role = $this->roles;
 		}
 
-		return View::make('enterprisecore::sentinel.roles.form', compact('mode', 'role'));
+		return View::make('enterpriseCore::sentinel.roles.form', compact('mode', 'role'));
 	}
 
 	/**

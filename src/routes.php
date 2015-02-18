@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 			$persistence = Sentinel::getPersistenceRepository();
 
-			return View::make('enterprisecore::sentinel.account.home', compact('user', 'persistence'));
+			return View::make('enterpriseCore::sentinel.account.home', compact('user', 'persistence'));
 		}]);
 
 		Route::get('kill', ['as' => 'admin_kill', function() {
@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 	// dashboard
 	Route::get('/', ['before' => 'auth', 'as', 'admin_dashboard', function() {
-		return View::make('enterprisecore::sentinel.dashboard');
+		return View::make('enterpriseCore::sentinel.dashboard');
 	}]);
 
 
@@ -116,13 +116,13 @@ Route::group(['prefix' => 'admin'], function() {
 
 	// wait
 	Route::get('wait', ['as' => 'admin_wait', function() {
-		return View::make('enterprisecore::sentinel.wait');
+		return View::make('enterpriseCore::sentinel.wait');
 	}]);
 
 
 	// reset
 	Route::get('reset', ['as' => 'admin_reset_password', function() {
-		return View::make('enterprisecore::sentinel.reset.begin');
+		return View::make('enterpriseCore::sentinel.reset.begin');
 	}]);
 	Route::post('reset', function() {
 		$rules = [
@@ -151,7 +151,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 		$code = $reminder->code;
 
-		$sent = Mail::send('enterprisecore::sentinel.emails.reminder', compact('user', 'code'), function($m) use ($user) {
+		$sent = Mail::send('enterpriseCore::sentinel.emails.reminder', compact('user', 'code'), function($m) use ($user) {
 			$m->to($user->email)->subject('Reset your account password.');
 		});
 
@@ -168,7 +168,7 @@ Route::group(['prefix' => 'admin'], function() {
 	Route::get('reset/{id}/{code}', function($id, $code) {
 		$user = Sentinel::findById($id);
 
-		return View::make('enterprisecore::sentinel.reset.complete');
+		return View::make('enterpriseCore::sentinel.reset.complete');
 
 	})->where('id', '\d+');
 	Route::post('reset/{id}/{code}', function($id, $code) {
@@ -226,7 +226,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 		$code = $activation->code;
 
-		$sent = Mail::send('enterprisecore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user) {
+		$sent = Mail::send('enterpriseCore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user) {
 			$m->to($user->email)->subject('Activate Your Account');
 		});
 

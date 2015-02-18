@@ -22,12 +22,12 @@
 			<div class="collapse navbar-collapse" id="admin-navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li{!! Request::is('/') ? ' class="active"' : null !!}><a href="{{ URL::to('/') }}">Home</a></li>
-					@if ( ! Sentinel::check())
-					<li{!! Request::is('admin/login') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_login') }}">Login</a></li>
-					<li{!! Request::is('admin/register') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_register') }}">Register</a></li>
-					@elseif (Sentinel::hasAccess('admin'))
-					<li{!! Request::is('admin/users*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_users') }}">Users</a></li>
-					<li{!! Request::is('admin/roles*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_roles') }}">Roles</a></li>
+					@if (Sentinel::check())
+						<li{!! Request::is('admin/broker-dashboard') ? ' class="active"' : null !!}><a href="{{ URL::route('broker_dashboard') }}">Broker Dashboard</a></li>
+						@if (Sentinel::hasAccess('admin'))
+							<li{!! Request::is('admin/users*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_users') }}">Users</a></li>
+							<li{!! Request::is('admin/roles*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_roles') }}">Roles</a></li>
+						@endif
 					@endif
 				</ul>
 				<ul class="nav navbar-nav pull-right">
@@ -40,6 +40,9 @@
 							</a>
 						</li>
 						<li><a href="{{ URL::route('admin_logout') }}">Logout</a></li>
+					@else
+						<li{!! Request::is('admin/login') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_login') }}">Login</a></li>
+						<li{!! Request::is('admin/register') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_register') }}">Register</a></li>
 					@endif
 				</ul>
 			</div>
@@ -66,16 +69,11 @@
 				</div>
 			@endif
 
-			@yield('body')
+			@yield('content')
 		</div>
 
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-		<script>
-			$('.tip').tooltip();
-		</script>
-
 		@yield('scripts')
 	</body>
 </html>

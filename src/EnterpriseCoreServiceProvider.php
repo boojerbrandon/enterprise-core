@@ -19,7 +19,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		$this->commands('compileCoreRoutes');
 
 		// merge configs so app inherits package
-		$this->mergeConfigFrom(__DIR__.'/config/enterprise-core.php', 'enterprisecore');
+		$this->mergeConfigFrom(__DIR__.'/config/enterprise-core.php', 'enterpriseCore');
 	}	
 
 	/**
@@ -30,10 +30,10 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		// tell app where views are held
-		$this->loadViewsFrom(__DIR__.'/resources/views', 'enterprisecore');
+		$this->loadViewsFrom(__DIR__.'/resources/views', 'enterpriseCore');
 
 		// tell app where translations are held
-		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'enterprisecore');
+		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'enterpriseCore');
 			
 		// include filters
 		include __DIR__.'/filters.php';
@@ -41,25 +41,11 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		// include routes
 		include __DIR__.'/routes.php';
 
-		// register view composers
-		$this->registerViewComposers();
-	}
-
-	/**
-	 * Register all view composers
-	 * 
-	 * @return void
-	 */
-	
-	public function registerViewComposers()
-	{
-		// when we make a quick search, build some stuff for it
-		View::composer('components.quick-search', function($view){
-			// we can access a passed in argument like this: $view['title'];
-			$view['searchConfigs'] = [
-				'price_range' => [100000,200000,300000,400000,500000,600000,700000,800000],
-			];
-		});
+		// define where the publisher should put things
+		$this->publishes([
+			__DIR__.'/config/enterprise-core.php' => config_path('enterprise-core.php'),
+			__DIR__.'/resources/views' => base_path('resources/views/vendor/enterpriseCore'),
+		]);
 	}
 
 	/** 
