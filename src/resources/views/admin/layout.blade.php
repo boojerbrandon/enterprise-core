@@ -24,10 +24,8 @@
 					<li{!! Request::is('/') ? ' class="active"' : null !!}><a href="{{ URL::to('/') }}">Home</a></li>
 					@if (Sentinel::check())
 						<li{!! Request::is('admin/broker-dashboard') ? ' class="active"' : null !!}><a href="{{ URL::route('broker_dashboard') }}">Broker Dashboard</a></li>
-						@if (Sentinel::hasAccess('admin'))
-							<li{!! Request::is('admin/users*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_users') }}">Users</a></li>
-							<li{!! Request::is('admin/roles*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_roles') }}">Roles</a></li>
-						@endif
+						<li{!! Request::is('admin/users*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_users') }}">Users</a></li>
+						<li{!! Request::is('admin/roles*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_roles') }}">Roles</a></li>
 					@endif
 				</ul>
 				<ul class="nav navbar-nav pull-right">
