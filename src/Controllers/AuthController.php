@@ -23,6 +23,144 @@ class AuthController extends BaseController {
 		return View::make('enterpriseCore::sentinel.login');
 	}
 
+	public function logout()
+	{
+		Sentinel::logout();
+		return Redirect::to('/');
+	}
+
+	public function wait()
+	{
+		return View::make('enterpriseCore::sentinel.wait');
+	}
+
+	public function reset()
+	{
+		return View::make('enterpriseCore::sentinel.reset.begin');
+	}
+
+	public function processReset()
+	{
+		$rules = [
+			'email' => 'required|email',
+		];
+
+		$validator = Validator::make(Input::get(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::back()
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$email = Input::get('email');
+
+		$user = Sentinel::findByCredentials(compact('email'));
+
+		if ( ! $user) {
+			return Redirect::back()
+				->withInput()
+				->withErrors('No user with that email address belongs in our system.');
+		}
+
+		$reminder = Reminder::exists($user) ?: Reminder::create($user);
+
+		$code = $reminder->code;
+
+		$sent = Mail::send('enterpriseCore::sentinel.emails.reminder', compact('user', 'code'), function($m) use ($user) {
+			$m->to($user->email)->subject('Reset your account password.');
+		});
+
+		if ($sent === 0) {
+			return Redirect::route('admin_register')
+				->withErrors('Failed to send reset password email.');
+		}
+
+		return Redirect::route('admin_wait');
+	}
+
+	public function activateAccount($id, $code) {
+		$user = Sentinel::findById($id);
+
+		if ( ! Activation::complete($user, $code)) {
+			return Redirect::route('admin_login')
+				->withErrors('Invalid or expired activation code.');
+		}
+
+		return Redirect::route('admin_login')
+			->withSuccess('Account activated.');
+	}
+
+	public function completeReset($id, $code)
+	{
+		$user = Sentinel::findById($id);
+		return View::make('enterpriseCore::sentinel.reset.complete');
+	}
+
+	public function processCompleteReset($id, $code) {
+		$rules = [
+			'password' => 'required|confirmed',
+		];
+
+		$validator = Validator::make(Input::get(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::back()
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$user = Sentinel::findById($id);
+
+		if ( ! $user) {
+			return Redirect::back()
+				->withInput()
+				->withErrors('The user no longer exists.');
+		}
+
+		if ( ! Reminder::complete($user, $code, Input::get('password'))) {
+			return Redirect::route('admin_login')
+				->withErrors('Invalid or expired reset code.');
+		}
+
+		return Redirect::route('admin_login')
+			->withSuccess("Password Reset.");
+	}
+
+	public function deactivate()
+	{
+		$user = Sentinel::check();
+
+		Activation::remove($user);
+
+		return Redirect::back()
+			->withSuccess('Account deactivated.');
+	}
+
+	public function reactivate()
+	{
+		if ( ! $user = Sentinel::check()) {
+			return Redirect::route('admin_login');
+		}
+
+		$activation = Activation::exists($user) ?: Activation::create($user);
+
+		$code = $activation->code;
+
+		$sent = Mail::send('enterpriseCore::sentinel.emails.activate', compact('user', 'code'), function($m) use ($user) {
+			$m->to($user->email)->subject('Activate Your Account');
+		});
+
+		if ($sent === 0) {
+			return Redirect::route('admin_register')
+				->withErrors('Failed to send activation email.');
+		}
+
+		return Redirect::route('admin_account')
+			->withSuccess('Account activated.');
+	}
+
+
 	/**
 	 * Handle posting of the form for logging the user in.
 	 *

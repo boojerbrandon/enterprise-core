@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class EnterpriseCoreServiceProvider extends ServiceProvider {
 	
@@ -35,6 +36,9 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		// tell app where translations are held
 		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'enterpriseCore');
 			
+		// temp for now
+		Sentinel::disableCheckpoints();
+
 		// include filters
 		include __DIR__.'/filters.php';
 
@@ -48,6 +52,15 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		]);
 	}
 
+	/**
+	 * gets the route definition file path
+	 * @return string
+	 */
+	public function getRouteDefinitionsPath()
+	{
+		return __DIR__.'/routes/route-definitions.php';
+	}
+	
 	/** 
 	 * Register all package commands
 	 * 

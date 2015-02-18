@@ -1,13 +1,13 @@
 @extends('enterpriseCore::admin.layout')
 
 @section('title')
-Login
+Homepage
 @stop
 
 @section('content')
 
 <div class="page-header">
-	<h1>Admin Dashboard</h1>
+	<h1>Admin Homepage</h1>
 </div>
 
 <div class="row">
