@@ -28,17 +28,17 @@
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					@if (! Sentinel::check())
-						<li><a href="{{ URL::route('admin_login') }}">Login</a></li>
-						<li><a href="{{ URL::route('admin_register') }}">Register</a></li>
-					@else
+					@if ($current_user)
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }} <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ $current_user->first_name or null }} {{ $current_user->last_name or null }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="{{ URL::route('admin_account') }}">Account</a></li>
 								<li><a href="{{ URL::route('admin_logout') }}">Logout</a></li>
 							</ul>
 						</li>
+					@else
+						<li><a href="{{ URL::route('admin_login') }}">Login</a></li>
+						<li><a href="{{ URL::route('admin_register') }}">Register</a></li>
 					@endif
 				</ul>
 			</div>

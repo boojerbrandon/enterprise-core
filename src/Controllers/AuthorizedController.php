@@ -1,12 +1,9 @@
 <?php namespace Activewebsite\EnterpriseCore\Controllers;
 
 use Activewebsite\EnterpriseCore\Controllers\BaseEnterpriseController;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+
 
 class AuthorizedController extends BaseEnterpriseController {
-
-	/* current logged in user */
-	protected $user;
 
 	/**
 	 * Constructor
@@ -22,9 +19,6 @@ class AuthorizedController extends BaseEnterpriseController {
 		
 		// before anything is run make sure there is a logged in user
 		$this->beforeFilter('auth');
-		
-		// get the current user
-		$this->user = Sentinel::getUser();
 	}
 
 }

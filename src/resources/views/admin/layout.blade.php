@@ -22,22 +22,21 @@
 			<div class="collapse navbar-collapse" id="admin-navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li{!! Request::is('/') ? ' class="active"' : null !!}><a href="{{ URL::to('/') }}">Home</a></li>
-					@if (Sentinel::check())
+					@if ($current_user)
 						<li{!! Request::is('admin/broker-dashboard') ? ' class="active"' : null !!}><a href="{{ URL::route('broker_dashboard') }}">Broker Dashboard</a></li>
 						<li{!! Request::is('admin/users*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_users') }}">Users</a></li>
 						<li{!! Request::is('admin/roles*') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_roles') }}">Roles</a></li>
 					@endif
 				</ul>
 				<ul class="nav navbar-nav pull-right">
-					@if ($user = Sentinel::check())
-						<li{!! Request::is('admin/account') ? ' class="active"' : null !!}>
-							<a href="{{ URL::route('admin_account') }}">Account
-							@if ( ! Activation::completed($user))
-							<span class="label label-danger">Inactive</span>
-							@endif
-							</a>
+					@if ($current_user)
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ $current_user->first_name or null }} {{ $current_user->last_name or null }} <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="{{ URL::route('admin_account') }}">Account</a></li>
+								<li><a href="{{ URL::route('admin_logout') }}">Logout</a></li>
+							</ul>
 						</li>
-						<li><a href="{{ URL::route('admin_logout') }}">Logout</a></li>
 					@else
 						<li{!! Request::is('admin/login') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_login') }}">Login</a></li>
 						<li{!! Request::is('admin/register') ? ' class="active"' : null !!}><a href="{{ URL::route('admin_register') }}">Register</a></li>
