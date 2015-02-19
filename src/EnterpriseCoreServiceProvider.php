@@ -1,8 +1,7 @@
 <?php namespace Activewebsite\EnterpriseCore;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Illuminate\Support\Facades\App;
 
 class EnterpriseCoreServiceProvider extends ServiceProvider {
 	
@@ -15,10 +14,10 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	{
 		// register package commands
 		$this->registerPackageCommands();
-		
-		// add command to artisan
-		$this->commands('compileCoreRoutes');
 
+		// register package facades
+		$this->registerFacades();
+		
 		// merge configs so app inherits package
 		$this->mergeConfigFrom(__DIR__.'/config/enterprise-core.php', 'enterpriseCore');
 	}	
@@ -36,9 +35,6 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		// tell app where translations are held
 		$this->loadTranslationsFrom(__DIR__.'/resources/lang', 'enterpriseCore');
 			
-		// temp for now
-		Sentinel::disableCheckpoints();
-
 		// include filters
 		include __DIR__.'/filters.php';
 
@@ -50,6 +46,21 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 			__DIR__.'/config/enterprise-core.php' => config_path('enterprise-core.php'),
 			__DIR__.'/resources/views' => base_path('resources/views/vendor/enterpriseCore'),
 		]);
+	}
+
+	/**
+	 * Register any package facades
+	 * 
+	 * @return void
+	 */
+	public function registerFacades()
+	{
+		App::bind('analytics', function() {
+			return new \Activewebsite\EnterpriseCore\Models\Analytics\AnalyticCodes;
+		});
+		App::bind('seo', function() {
+			return new \Activewebsite\EnterpriseCore\Models\Seo\Seo;
+		});
 	}
 
 	/**
@@ -71,5 +82,9 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		$this->app['compileCoreRoutes'] = $this->app->share(function($app) {
             return new \Activewebsite\EnterpriseCore\Commands\RouteCompiler;
         });
+
+        // add command to artisan
+		$this->commands('compileCoreRoutes');
 	}
+
 }

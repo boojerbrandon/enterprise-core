@@ -9,6 +9,7 @@ use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Activewebsite\EnterpriseCore\Facades\SeoFacade as SEO;
 
 class AuthController extends BaseEnterpriseController {
 

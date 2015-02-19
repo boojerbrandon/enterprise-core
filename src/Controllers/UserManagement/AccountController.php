@@ -1,10 +1,10 @@
 <?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
 
-use Activewebsite\EnterpriseCore\Controllers\AuthorizedController;
+use Activewebsite\EnterpriseCore\Controllers\BaseAuthorizedController;
 use Illuminate\Support\Facades\Redirect;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
-class AccountController extends AuthorizedController {
+class AccountController extends BaseAuthorizedController {
 
 	/**
 	 * Constructor.

@@ -11,6 +11,10 @@
 |
 */
 
+// temp for now
+Sentinel::disableCheckpoints();
+
+
 Route::filter('auth', function()
 {
 	if (! Sentinel::check())

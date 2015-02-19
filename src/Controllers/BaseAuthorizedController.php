@@ -3,7 +3,7 @@
 use Activewebsite\EnterpriseCore\Controllers\BaseEnterpriseController;
 
 
-class AuthorizedController extends BaseEnterpriseController {
+class BaseAuthorizedController extends BaseEnterpriseController {
 
 	/**
 	 * Constructor

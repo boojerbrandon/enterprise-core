@@ -1,8 +1,6 @@
 @extends($layout)
 
-@section('title')
-Login
-@stop
+<?php SEO::setPageTitle("Login", false); ?>
 
 @section('content')
 

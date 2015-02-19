@@ -4,7 +4,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Enterprise 2.0</title>
+	<title>{{ SEO::getPageTitle() }}</title>
+	<meta name="keywords" content="{{ SEO::getPageKeywords() }}">
+	<meta name="description" content="{{ SEO::getPageDescription() }}">
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -47,7 +49,7 @@
 
 	<div class="container">
 		<div class="col-sm-3">
-			{{ RenderComponent::render('QuickSearchComponent', ['title' => 'foo title']) }}
+			{!! RenderComponent::render('QuickSearchComponent', ['title' => 'foo title']) !!}
 			
 		</div>
 		<div class="col-sm-9">
@@ -58,5 +60,9 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	@yield('scripts')
+	
+	{!! Analytics::getGACode() !!}
 </body>
 </html>
