@@ -1,14 +1,12 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
 
-use Illuminate\Support\Facades\View;
+use Activewebsite\EnterpriseCore\Controllers\BaseAdminController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
-
-class RolesController extends AuthorizedController {
+class RolesController extends BaseAdminController {
 
 	/**
 	 * Holds the Sentinel Roles repository.
@@ -37,8 +35,8 @@ class RolesController extends AuthorizedController {
 	public function index()
 	{
 		$roles = $this->roles->paginate();
-
-		return View::make('enterpriseCore::sentinel.roles.index', compact('roles'));
+		
+		return $this->renderView('enterpriseCore::sentinel.roles.index', compact('roles'));
 	}
 
 	/**
@@ -110,19 +108,15 @@ class RolesController extends AuthorizedController {
 	 */
 	protected function showForm($mode, $id = null)
 	{
-		if ($id)
-		{
-			if ( ! $role = $this->roles->find($id))
-			{
+		if ($id) {
+			if ( ! $role = $this->roles->find($id)) {
 				return Redirect::route('admin_roles');
 			}
-		}
-		else
-		{
+		} else {
 			$role = $this->roles;
 		}
 
-		return View::make('enterpriseCore::sentinel.roles.form', compact('mode', 'role'));
+		return $this->renderView('enterpriseCore::sentinel.roles.form', compact('mode', 'role'));
 	}
 
 	/**
@@ -141,33 +135,27 @@ class RolesController extends AuthorizedController {
 			'slug' => 'required|unique:roles'
 		];
 
-		if ($id)
-		{
+		if ($id) {
 			$role = $this->roles->find($id);
 
 			$rules['slug'] .= ",slug,{$role->slug},slug";
 
 			$messages = $this->validateRole($input, $rules);
 
-			if ($messages->isEmpty())
-			{
+			if ($messages->isEmpty()) {
 				$role->fill($input);
 
 				$role->save();
 			}
-		}
-		else
-		{
+		} else {
 			$messages = $this->validateRole($input, $rules);
 
-			if ($messages->isEmpty())
-			{
+			if ($messages->isEmpty()) {
 				$role = $this->roles->create($input);
 			}
 		}
 
-		if ($messages->isEmpty())
-		{
+		if ($messages->isEmpty()) {
 			return Redirect::route('admin_roles');
 		}
 

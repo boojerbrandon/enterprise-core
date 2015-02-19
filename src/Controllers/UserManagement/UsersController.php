@@ -1,14 +1,13 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
 
-use Illuminate\Support\Facades\View;
+use Activewebsite\EnterpriseCore\Controllers\BaseAdminController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 
-class UsersController extends AuthorizedController {
+class UsersController extends BaseAdminController {
 
 	/**
 	 * Holds the Sentinel Users repository.
@@ -37,7 +36,8 @@ class UsersController extends AuthorizedController {
 	public function index()
 	{
 		$users = $this->users->createModel()->paginate();
-		return View::make('enterpriseCore::sentinel.users.index', compact('users'));
+	
+		return $this->renderView('enterpriseCore::sentinel.users.index', compact('users'));
 	}
 
 	/**
@@ -49,8 +49,7 @@ class UsersController extends AuthorizedController {
 	{
 		$user = $this->users->createModel();
 		
-
-		return View::make('enterpriseCore::sentinel.users.form', compact('user'));
+		return $this->renderView('enterpriseCore::sentinel.users.form', compact('user'));
 	}
 
 	/**
@@ -76,8 +75,8 @@ class UsersController extends AuthorizedController {
 		}
 
 		$all_roles = Sentinel::getRoleRepository()->createModel()->get();
-
-		return View::make('enterpriseCore::sentinel.users.edit_form', compact('user', 'all_roles'));
+	
+		return $this->renderView('enterpriseCore::sentinel.users.edit_form', compact('user', 'all_roles'));
 	}
 
 	/**
@@ -126,16 +125,14 @@ class UsersController extends AuthorizedController {
 			'email'      => 'required|unique:users'
 		];
 
-		if ($id)
-		{
+		if ($id) {
 			$user = $this->users->createModel()->find($id);
 
 			$rules['email'] .= ",email,{$user->email},email";
 
 			$messages = $this->validateUser($input, $rules);
 
-			if ($messages->isEmpty())
-			{
+			if ($messages->isEmpty()) {
 				// get all roles
 				$all_roles = Sentinel::getRoleRepository()->createModel()->get();
 				
@@ -154,13 +151,10 @@ class UsersController extends AuthorizedController {
 
 				$this->users->update($user, $input);
 			}
-		}
-		else
-		{
+		} else {
 			$messages = $this->validateUser($input, $rules);
 
-			if ($messages->isEmpty())
-			{
+			if ($messages->isEmpty()) {
 				$user = $this->users->create($input);
 
 				$code = Activation::create($user);
@@ -169,8 +163,7 @@ class UsersController extends AuthorizedController {
 			}
 		}
 
-		if ($messages->isEmpty())
-		{
+		if ($messages->isEmpty()) {
 			return Redirect::route('admin_users');
 		}
 

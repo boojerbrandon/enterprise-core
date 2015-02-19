@@ -1,17 +1,29 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
 
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\View;
+use Activewebsite\EnterpriseCore\Controllers\AuthorizedController;
 use Illuminate\Support\Facades\Redirect;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
-class AccountController extends BaseController {
+class AccountController extends AuthorizedController {
 
+	/**
+	 * Constructor.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		// this controller uses the admin layout by default
+		$this->setLayout('enterpriseCore::admin.layout');
+	}
+	
 	public function index()
 	{
 		$user = Sentinel::getUser();
 		$persistence = Sentinel::getPersistenceRepository();
-		return View::make('enterpriseCore::sentinel.account.home', compact('user', 'persistence'));
+		return $this->renderView('enterpriseCore::sentinel.account.home', compact('user', 'persistence'));
 	}
 
 	public function killCurrentUserSession()

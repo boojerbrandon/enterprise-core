@@ -1,4 +1,4 @@
-@extends('enterpriseCore::admin.layout')
+@extends($layout)
 
 @section('title')
 Register for Swipe

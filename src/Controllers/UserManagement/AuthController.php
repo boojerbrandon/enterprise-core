@@ -1,7 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
 
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\View;
+use Activewebsite\EnterpriseCore\Controllers\BaseEnterpriseController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -11,8 +10,21 @@ use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 
-class AuthController extends BaseController {
+class AuthController extends BaseEnterpriseController {
 
+	/**
+	 * Constructor.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		// this controller uses the admin layout by default
+		$this->setLayout('enterpriseCore::admin.layout');
+	}
+	
 	/**
 	 * Show the form for logging the user in.
 	 *
@@ -20,7 +32,7 @@ class AuthController extends BaseController {
 	 */
 	public function login()
 	{
-		return View::make('enterpriseCore::sentinel.login');
+		return $this->renderView('enterpriseCore::sentinel.login');
 	}
 
 	public function logout()
@@ -31,12 +43,12 @@ class AuthController extends BaseController {
 
 	public function wait()
 	{
-		return View::make('enterpriseCore::sentinel.wait');
+		return $this->renderView('enterpriseCore::sentinel.wait');
 	}
 
 	public function reset()
 	{
-		return View::make('enterpriseCore::sentinel.reset.begin');
+		return $this->renderView('enterpriseCore::sentinel.reset.begin');
 	}
 
 	public function processReset()
@@ -94,7 +106,7 @@ class AuthController extends BaseController {
 	public function completeReset($id, $code)
 	{
 		$user = Sentinel::findById($id);
-		return View::make('enterpriseCore::sentinel.reset.complete');
+		return $this->renderView('enterpriseCore::sentinel.reset.complete');
 	}
 
 	public function processCompleteReset($id, $code) {
@@ -160,7 +172,6 @@ class AuthController extends BaseController {
 			->withSuccess('Account activated.');
 	}
 
-
 	/**
 	 * Handle posting of the form for logging the user in.
 	 *
@@ -220,7 +231,7 @@ class AuthController extends BaseController {
 	 */
 	public function register()
 	{
-		return View::make('enterpriseCore::sentinel.register');
+		return $this->renderView('enterpriseCore::sentinel.register');
 	}
 
 	/**

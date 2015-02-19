@@ -1,4 +1,4 @@
-@extends('enterpriseCore::admin.layout')
+@extends($layout)
 
 {{-- Page content --}}
 @section('content')
