@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore;
+<?php namespace Booj\EnterpriseCore;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
@@ -56,10 +56,10 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	public function registerFacades()
 	{
 		App::bind('analytics', function() {
-			return new \Activewebsite\EnterpriseCore\Models\Analytics\AnalyticCodes;
+			return new \Booj\EnterpriseCore\Models\Analytics\AnalyticCodes;
 		});
 		App::bind('seo', function() {
-			return new \Activewebsite\EnterpriseCore\Models\Seo\Seo;
+			return new \Booj\EnterpriseCore\Models\Seo\Seo;
 		});
 	}
 
@@ -80,7 +80,7 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 	public function registerPackageCommands()
 	{
 		$this->app['compileCoreRoutes'] = $this->app->share(function($app) {
-            return new \Activewebsite\EnterpriseCore\Commands\RouteCompiler;
+            return new \Booj\EnterpriseCore\Commands\RouteCompiler;
         });
 
         // add command to artisan

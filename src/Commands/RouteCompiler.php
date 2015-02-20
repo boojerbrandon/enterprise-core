@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore\Commands;
+<?php namespace Booj\EnterpriseCore\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
@@ -19,7 +19,7 @@ class RouteCompiler extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Compiles all of the Activewebsite package routes into a giant array.';
+	protected $description = 'Compiles all of the Booj package routes into a giant array.';
 
 	/**
 	 * Create a new command instance.
@@ -42,7 +42,7 @@ class RouteCompiler extends Command {
 		$appInstance = App();
 		$files = [];
 		foreach ($providers as $provider) {
-			if (strpos($provider, 'Activewebsite') !== false) {
+			if (strpos($provider, 'Booj') !== false) {
 				$providerInstance = $appInstance->make($provider, [$appInstance]);
 				if (method_exists($providerInstance, 'getRouteDefinitionsPath')) {
 					$files[] = $providerInstance->getRouteDefinitionsPath();

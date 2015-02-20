@@ -1,6 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
+<?php namespace Booj\EnterpriseCore\Controllers\UserManagement;
 
-use Activewebsite\EnterpriseCore\Controllers\BaseAdminController;
+use Booj\EnterpriseCore\Controllers\BaseAdminController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;

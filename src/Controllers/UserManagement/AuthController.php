@@ -1,6 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers\UserManagement;
+<?php namespace Booj\EnterpriseCore\Controllers\UserManagement;
 
-use Activewebsite\EnterpriseCore\Controllers\BaseEnterpriseController;
+use Booj\EnterpriseCore\Controllers\BaseEnterpriseController;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -9,7 +9,7 @@ use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
-use Activewebsite\EnterpriseCore\Facades\SeoFacade as SEO;
+use Booj\EnterpriseCore\Facades\SeoFacade as SEO;
 
 class AuthController extends BaseEnterpriseController {
 

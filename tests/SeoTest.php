@@ -1,6 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Tests;
+<?php namespace Booj\EnterpriseCore\Tests;
 
-use Activewebsite\EnterpriseCore\Models\Seo\Seo;
+use Booj\EnterpriseCore\Models\Seo\Seo;
 use PHPUnit_Framework_TestCase;
 use Mockery as m;
 
@@ -36,7 +36,7 @@ class SearchTest extends PHPUnit_Framework_TestCase {
 	{
 		$this->mock_configs();
 		$obj = new Seo();
-		$this->assertInstanceOf('Activewebsite\EnterpriseCore\Models\Seo\Seo', $obj);
+		$this->assertInstanceOf('Booj\EnterpriseCore\Models\Seo\Seo', $obj);
 	}
 
 	/** @test */

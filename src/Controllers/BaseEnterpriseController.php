@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Booj\EnterpriseCore\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\View;

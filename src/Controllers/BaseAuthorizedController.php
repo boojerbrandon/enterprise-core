@@ -1,6 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers;
+<?php namespace Booj\EnterpriseCore\Controllers;
 
-use Activewebsite\EnterpriseCore\Controllers\BaseEnterpriseController;
+use Booj\EnterpriseCore\Controllers\BaseEnterpriseController;
 
 
 class BaseAuthorizedController extends BaseEnterpriseController {

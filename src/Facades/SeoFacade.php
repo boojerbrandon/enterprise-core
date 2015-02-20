@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore\Facades;
+<?php namespace Booj\EnterpriseCore\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

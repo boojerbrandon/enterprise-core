@@ -1,6 +1,6 @@
-<?php namespace Activewebsite\EnterpriseCore\Controllers\Admin;
+<?php namespace Booj\EnterpriseCore\Controllers\Admin;
 
-use Activewebsite\EnterpriseCore\Controllers\BaseAdminController;
+use Booj\EnterpriseCore\Controllers\BaseAdminController;
 
 class AdminHomepageController extends BaseAdminController {
 

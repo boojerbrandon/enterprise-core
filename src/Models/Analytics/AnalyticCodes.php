@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore\Models\Analytics;
+<?php namespace Booj\EnterpriseCore\Models\Analytics;
 
 use Illuminate\Support\Facades\Config;
 

@@ -1,4 +1,4 @@
-<?php namespace Activewebsite\EnterpriseCore\Models\Seo;
+<?php namespace Booj\EnterpriseCore\Models\Seo;
 
 use Illuminate\Support\Facades\Config;
 
@@ -18,6 +18,11 @@ class Seo {
 		$this->setDefaults();
 	}
 
+	/**
+	 * Set default title, description and keywords from config file
+	 *
+	 * @return  void
+	 */
 	public function setDefaults()
 	{
 		// set our defaults
@@ -49,7 +54,7 @@ class Seo {
 	 */
 	public function getPageTitle()
 	{
-		return $this->pageTitle;
+		return str_replace('"', '', $this->pageTitle);
 	}
 
 	/**
@@ -75,7 +80,7 @@ class Seo {
 	 */
 	public function getPageKeywords()
 	{
-		return $this->pageKeywords;
+		return str_replace('"', '', $this->pageKeywords);
 	}	
 
 	/**
@@ -101,7 +106,7 @@ class Seo {
 	 */
 	public function getPageDescription()
 	{
-		return $this->pageDescription;
+		return str_replace('"', '', $this->pageDescription);
 	}
 
 }
