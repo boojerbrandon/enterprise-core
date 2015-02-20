@@ -1,8 +1,8 @@
 <?php namespace Booj\EnterpriseCore\Controllers;
 
-use Booj\EnterpriseCore\Controllers\AuthorizedController;
+use Booj\EnterpriseCore\Controllers\BaseAuthorizedController;
 
-class BaseAdminController extends AuthorizedController {
+class BaseAdminController extends BaseAuthorizedController {
 
 	/**
 	 * Constructor
