@@ -51,7 +51,7 @@
 
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-	<button type="submit" class="btn btn-default">Submit</button>
+	<button type="submit" class="btn btn-success">Submit</button> <a href="{{ URL::route('admin_users') }}" class="btn btn-default">Cancel</a>
 
 </form>
 

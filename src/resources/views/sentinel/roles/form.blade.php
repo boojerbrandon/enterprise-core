@@ -29,10 +29,41 @@
 
 	</div>
 
-	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	@if (!empty($role->permissions))
+		<h3>Permissions</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Route</th>
+					<th>Access</th>
+				<tr>
+			</thead>
+			<tbody>
+				@foreach($role->permissions as $name => $value)
+					<tr>
+						<td>{{ $name }}</td>
+						<td>
+							<label class="radio-inline">
+								<input type="radio" name="permissions[{{ $name }}]" value='1' {{ ($value == 1 ? 'checked="checked"' : '') }}>
+								Yes
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="permissions[{{ $name }}]" value='0' {{ ($value != 1 ? 'checked="checked"' : '') }}>
+								No
+							</label>
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	@endif
 
-	<button type="submit" class="btn btn-default">Submit</button>
+	<hr>
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	
+	<button type="submit" class="btn btn-success">Submit</button> <a href="{{ URL::route('admin_roles') }}" class="btn btn-default">Cancel</a>
 
 </form>
 
 @stop
+

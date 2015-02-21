@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
+use Booj\EnterpriseCore\Facades\SiteOwnerFacade as SiteOwner;
 
 class EnterpriseCoreServiceProvider extends ServiceProvider {
 	
@@ -38,8 +39,8 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		// include filters
 		include __DIR__.'/filters.php';
 
-		// include routes
-		include __DIR__.'/routes.php';
+		// this creates all of the routes
+		$this->app->make('Booj\EnterpriseCore\Models\RouteBuilder')->getRoutes();
 
 		// define where the publisher should put things
 		$this->publishes([
@@ -58,9 +59,15 @@ class EnterpriseCoreServiceProvider extends ServiceProvider {
 		App::bind('analytics', function() {
 			return new \Booj\EnterpriseCore\Models\Analytics\AnalyticCodes;
 		});
+
 		App::bind('seo', function() {
 			return new \Booj\EnterpriseCore\Models\Seo\Seo;
 		});
+
+		App::bind('site', function() {
+			return new \Booj\EnterpriseCore\Models\Site;
+		});
+
 	}
 
 	/**

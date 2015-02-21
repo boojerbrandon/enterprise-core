@@ -39,36 +39,6 @@
 
 	</div>
 
-	@if ($all_roles->count())
-		<div class="form-group">
-		<label>Roles</label>
-		<ul class="list-unstyled">
-			@foreach ($all_roles as $role) 
-				<li>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="roles[{{ $role->id }}]" value='1' {{ ($user->inRole($role->id) ? 'checked="checked"' : '') }}>
-						{{ $role->name }}	
-					</label>
-				</li>
-			@endforeach
-		</ul>
-	@endif	
-
-	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-	<button type="submit" class="btn btn-default">Submit</button>
-
-</form>
-
-<br><br><br>
-
-
-
-<br><br><br>
-
-<h2>Update Password</h2>
-<hr>
-<form method="post" action="" autocomplete="off">
 	<div class="form-group{{ $errors->first('password', ' has-error') }}">
 
 		<label for="password">Password</label>
@@ -78,8 +48,28 @@
 		<span class="help-block">{{{ $errors->first('password', ':message') }}}</span>
 
 	</div>
+
+	@if ($all_roles->count())
+		<div class="form-group">
+			<h3>Roles</h3>
+			<ul class="list-unstyled">
+				@foreach ($all_roles as $role) 
+					<li>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="roles[{{ $role->id }}]" value='1' {{ ($user->inRole($role->id) ? 'checked="checked"' : '') }}>
+							{{ $role->name }}	
+						</label>
+					</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif	
+
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-	<button type="submit" class="btn btn-default">Submit</button>
+	
+	<hr>
+	<button type="submit" class="btn btn-success">Submit</button> <a href="{{ URL::route('admin_users') }}" class="btn btn-default">Cancel</a>
+
 </form>
 
 @stop
