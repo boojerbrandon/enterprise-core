@@ -7,9 +7,8 @@
 	<title>{{ SEO::getPageTitle() }}</title>
 	<meta name="keywords" content="{{ SEO::getPageKeywords() }}">
 	<meta name="description" content="{{ SEO::getPageDescription() }}">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('assets/dist/css/app.css') }}" rel="stylesheet">
+	<script data-main="appMain" src="{{ asset('assets/dist/js/require.js') }}"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -58,9 +57,6 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 	@yield('scripts')
 	
 	{!! Analytics::getGACode() !!}
