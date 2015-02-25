@@ -60,7 +60,34 @@ class RouteCompiler extends Command {
 			}
 		}
 
-		Storage::put('core-routes.php', serialize($routes));
+		\DB::statement("DROP TABLE IF EXISTS routes");
+		\DB::statement("CREATE TABLE routes(
+					   id int not null primary key auto_increment,
+					   uri varchar(255),
+					   verbs varchar(255),
+					   params varchar(255),
+					   name varchar(255),
+					   controller varchar(255),
+					   method varchar(255),
+					   `where` varchar(255),
+					   `before` varchar(255),
+					   site_types varchar(255),
+					   roles varchar(255))");
+
+		foreach($routes as $route)
+		{
+			$verbs = implode(',',$route['verbs']);
+			$types = implode(',',$route['siteTypes']);
+			$roles = implode(',',$route['roles']);
+			\DB::statement("INSERT INTO routes(uri,verbs,params,name,
+										       controller,method,`where`,
+										       `before`,site_types,roles) 
+							VALUES(?,?,?,?,?,?,?,?,?,?)",
+							array($route['uri'],$verbs,$route['params'],
+								  $route['name'],$route['controller'],
+								  $route['method'],$route['where'],
+								  $route['before'],$types,$roles));
+		}
 		
 		$this->info('Core Routes have been compiled.');
 	}

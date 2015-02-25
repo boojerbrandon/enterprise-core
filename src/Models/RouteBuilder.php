@@ -19,46 +19,40 @@ class RouteBuilder {
 		$type = Site::getSiteType();
 		$owner = Site::getSiteOwner();
 
-		/**
-		 * TODO
-		 * run a mysql query here to find all routes by $type.
-		 * Then, get all the menue items of the current owner and merge them all together.
-		 * 
-		 */
+		$query = "SELECT * from routes 
+		          WHERE site_types 
+		          LIKE '%{$type}%' 
+		          OR site_types = 'all'";
 
-		if (Storage::exists('core-routes.php')) {
-			$compiledRoutes = unserialize(Storage::get('core-routes.php'));
+		$results = \DB::select($query);
 
-			if (!empty($compiledRoutes)) {
-				foreach ($compiledRoutes as $route) {
-					// we need at least these things to make a route verbs, controller, method
-					if (isset($route['verbs']) && isset($route['controller']) && isset($route['method'])) {
-					
-						// build uri
-						$uri = $route['uri'];
-						if (isset($route['params'])) {
-							$uri .= $route['params'];
-						}
+		$user = Sentinel::getUser();
 
-						$extra = [
-							'uses' => $route['controller'] . '@' . $route['method']
-						];
-
-						// add route name if available
-						if (isset($route['name'])) {
-							$extra['as'] = $route['name'];
-						}
-
-						// add route name if available
-						if (isset($route['before'])) {
-							$extra['before'] = $route['before'];
-						}
-
-						// create route
-						Route::match($route['verbs'], $uri, $extra);
+		foreach($results as $route)
+		{
+			$verbs = explode(',',$route->verbs);
+			$types = explode(',',$route->site_types);
+			$roles = explode(',',$route->roles);
+			$uri = $route->uri . $route->params;
+			$extra = ['uses' => $route->controller . '@' . $route->method];
+			if($route->name != "") $extra['as'] = $route->name;
+			if($route->before != "") $extra['before'] = $route->before;
+			if($roles[0] == "") $roles = [];
+			if(count($roles))
+			{
+				foreach($roles as $role)
+				{
+					if($user && $user->inRole($role))
+					{
+						Route::match($verbs,$uri,$extra);
+						break;
 					}
 				}
-			}	
-		}
+			}
+			else
+			{
+				Route::match($verbs,$uri,$extra);
+			}
+		}	
 	}
 }
